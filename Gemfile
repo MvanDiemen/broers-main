@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-
 gem 'rails', '4.2.5.2'
 gem 'pg'
+gem 'sass-rails', '~> 5.0', '>= 5.0.6'
 
 gem 'slim'
 gem 'typescript-rails'
@@ -26,6 +26,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'yard'
 gem 'devise'
 gem 'heroku'
+gem 'messagebird-rest'
 
 # Use Unicorn as the app server
 # gem 'unicorn'
