@@ -8,8 +8,8 @@ class CreateMarketings < ActiveRecord::Migration
     end
 
     create_table :marketings_customers do |t|
-      t.references :marketings
-      t.references :customers
+      t.integer :marketing_id
+      t.integer :customer_id
     end
 
     add_index :marketings_customers, [:marketing_id, :customer_id]

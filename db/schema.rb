@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20160913164709) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "customers", force: :cascade do |t|
     t.date     "date_of_birth"
     t.string   "first_name"
@@ -31,12 +34,12 @@ ActiveRecord::Schema.define(version: 20160913164709) do
   end
 
   create_table "marketings_customers", force: :cascade do |t|
-    t.integer "marketings_id"
-    t.integer "customers_id"
+    t.integer "marketing_id"
+    t.integer "customer_id"
   end
 
-  add_index "marketings_customers", [nil, nil], name: "index_marketings_customers_on_marketing_id_and_customer_id"
-  add_index "marketings_customers", [nil], name: "index_marketings_customers_on_customer_id"
+  add_index "marketings_customers", ["customer_id"], name: "index_marketings_customers_on_customer_id", using: :btree
+  add_index "marketings_customers", ["marketing_id", "customer_id"], name: "index_marketings_customers_on_marketing_id_and_customer_id", using: :btree
 
   create_table "messages", force: :cascade do |t|
     t.integer  "customer_id"
@@ -50,9 +53,9 @@ ActiveRecord::Schema.define(version: 20160913164709) do
     t.datetime "updated_at",      null: false
   end
 
-  add_index "messages", ["customer_id"], name: "index_messages_on_customer_id"
-  add_index "messages", ["marketing_id"], name: "index_messages_on_marketing_id"
-  add_index "messages", ["subscription_id"], name: "index_messages_on_subscription_id"
+  add_index "messages", ["customer_id"], name: "index_messages_on_customer_id", using: :btree
+  add_index "messages", ["marketing_id"], name: "index_messages_on_marketing_id", using: :btree
+  add_index "messages", ["subscription_id"], name: "index_messages_on_subscription_id", using: :btree
 
   create_table "orders", force: :cascade do |t|
     t.date     "date"
@@ -63,7 +66,7 @@ ActiveRecord::Schema.define(version: 20160913164709) do
     t.datetime "updated_at",       null: false
   end
 
-  add_index "orders", ["customer_id"], name: "index_orders_on_customer_id"
+  add_index "orders", ["customer_id"], name: "index_orders_on_customer_id", using: :btree
 
   create_table "subscriptions", force: :cascade do |t|
     t.date     "date"
@@ -73,8 +76,8 @@ ActiveRecord::Schema.define(version: 20160913164709) do
     t.datetime "updated_at",  null: false
   end
 
-  add_index "subscriptions", ["customer_id"], name: "index_subscriptions_on_customer_id"
-  add_index "subscriptions", ["order_id"], name: "index_subscriptions_on_order_id"
+  add_index "subscriptions", ["customer_id"], name: "index_subscriptions_on_customer_id", using: :btree
+  add_index "subscriptions", ["order_id"], name: "index_subscriptions_on_order_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
@@ -94,7 +97,13 @@ ActiveRecord::Schema.define(version: 20160913164709) do
     t.string   "last_sign_in_ip"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "messages", "customers"
+  add_foreign_key "messages", "marketings"
+  add_foreign_key "messages", "subscriptions"
+  add_foreign_key "orders", "customers"
+  add_foreign_key "subscriptions", "customers"
+  add_foreign_key "subscriptions", "orders"
 end
