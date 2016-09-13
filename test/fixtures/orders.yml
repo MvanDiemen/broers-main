@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2016-09-13
+  customer_id: 
+  replacement_type: MyString
+  lens_type: MyString
+
+two:
+  date: 2016-09-13
+  customer_id: 
+  replacement_type: MyString
+  lens_type: MyString

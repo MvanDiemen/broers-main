@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  customer_id: 
+  subscription_id: 
+  marketing_id: 
+  body: MyText
+  subject: MyString
+  date: 2016-09-13
+  type: 
+
+two:
+  customer_id: 
+  subscription_id: 
+  marketing_id: 
+  body: MyText
+  subject: MyString
+  date: 2016-09-13
+  type: 
