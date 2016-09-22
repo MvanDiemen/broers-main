@@ -6,6 +6,7 @@ gem 'pg'
 gem 'sass-rails', '~> 5.0', '>= 5.0.6'
 
 gem 'slim'
+gem 'slim-rails'
 gem 'typescript-rails'
 
 # Use Uglifier as compressor for JavaScript assets
