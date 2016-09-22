@@ -1,0 +1,36 @@
+== content_for :title do
+  = @customer.name
+
+.col-md-4
+  .panel.panel-default
+    .panel-heading = Customer.model_name.human
+    .panel-body
+      dl.dl-horizontal
+        dt= Customer.human_attribute_name(:first_name)
+        dd= @customer.first_name
+        dt= Customer.human_attribute_name(:infix)
+        dd= @customer.infix
+        dt= Customer.human_attribute_name(:last_name)
+        dd= @customer.last_name
+        dt= Customer.human_attribute_name(:date_of_birth)
+        dd= l(@customer.date_of_birth, format: :long)
+        dt= Customer.human_attribute_name(:number)
+        dd= @customer.number
+
+.col-md-8
+  .panel.panel-default
+    .panel-heading = Order.model_name.human.pluralize
+    table.table.table-striped.table-bordered
+      thead
+        th Ordernummer
+        th Vervangingssysteem
+        th Type lenzen
+        th Datum
+        th Einddatum
+      tbody
+        - @customer.orders.each do |order|
+          td= link_to order.id, order_path(order)
+          td= order.replacement_type
+          td= order.lens_type
+          td= l(order.date, format: :long)
+          td= l(order.date + 6.months, format: :long)
