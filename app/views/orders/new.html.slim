@@ -1,0 +1,28 @@
+== content_for :title do
+  ' Nieuwe bestelling
+
+.col-md-12
+  .panel.panel-default
+    .panel-heading
+      - if @customer
+        = t('.new_order_for', customer: @customer.name)
+      - else
+        = t('.new_order')
+
+    .panel-body
+      = form_for @order, url: {action: 'create'} do |f|
+        = f.hidden_field :customer_id, value: @customer.id
+        .form-group
+          = f.label :number
+          = f.text_field :number, class: 'form-control'
+        .form-group
+          = f.label :date
+          = f.date_field :date, value: Date.today, class: 'form-control'
+        .form-group
+          = f.label :lens_type
+          = f.select :lens_type, Order::LENS_TYPES, {}, class: 'form-control'
+        .form-group
+          = f.label :replacement_type
+          = f.select :replacement_type, Order::REPLACEMENT_TYPES, {}, class: 'form-control'
+        .form-group
+          = f.submit class: 'btn btn-primary'

@@ -1,0 +1,54 @@
+== content_for :title do
+  ' Nieuwe Klant
+
+.col-md-12
+  .panel.panel-default
+    .panel-heading = Customer.model_name.human
+    .panel-body
+      = form_for @customer, url: {action: 'create'} do |f|
+        .row
+          .col-md-12
+            .col-md-6
+              h2 Klant
+              .form-group
+                = f.label :first_name
+                = f.text_field :first_name, class: 'form-control'
+              .form-group
+                = f.label :infix
+                = f.text_field :infix, class: 'form-control'
+              .form-group
+                = f.label :last_name
+                = f.text_field :last_name, class: 'form-control'
+              .form-group
+                = f.label :date_of_birth
+                = f.date_field :date_of_birth, class: 'form-control'
+              .form-group
+                = f.label :number
+                = f.text_field :number, class: 'form-control'
+              .form-group
+                = f.label :phone
+                = f.text_field :phone, class: 'form-control'
+              .form-group
+                = f.label :email
+                = f.text_field :email, class: 'form-control'
+            /- f.fields_for :orders, @order do |of|
+            /  .col-md-6
+            /    h2 Bestelling
+            /    .form-group
+            /      = of.label :number
+            /      = of.text_field :number, class: 'form-control'
+            /    .form-group
+            /      = of.label :date
+            /      = of.date_field :date, value: Date.today, class: 'form-control'
+            /    .form-group
+            /      = of.label :lens_type
+            /      = of.select :lens_type, Order::LENS_TYPES, {},
+            /        class: 'form-control'
+            /    .form-group
+            /      = of.label :replacement_type
+            /      = of.select :replacement_type, Order::REPLACEMENT_TYPES, {},
+            /        class: 'form-control'
+        .row
+          .col-md-12
+            .form-group
+              = f.submit class: 'btn btn-primary'

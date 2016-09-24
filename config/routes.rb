@@ -13,7 +13,12 @@ Rails.application.routes.draw do
     resources :marketings
   end
 
-  resources :orders
+  resources :orders do
+    member do
+      get :new_subscription
+    end
+  end
+
   resources :subscriptions
   resources :messages
   resources :users

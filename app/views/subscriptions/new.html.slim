@@ -1,0 +1,15 @@
+== content_for :title do
+  ' Nieuw abonnement
+
+.col-md-12
+  .panel.panel-default
+    .panel-heading
+      = t('.new_subscription_for', customer: @order.customer, @order.number)
+
+    .panel-body
+      = form_for @subscription, url: {action: 'create'} do |f|
+        = f.hidden_field :customer_id, value: @order.id
+        = f.hidden_field :order_id, value: @order.id
+
+      .form-group
+        = f.submit class: 'btn btn-primary'

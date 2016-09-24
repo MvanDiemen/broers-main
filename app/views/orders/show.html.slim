@@ -1,0 +1,47 @@
+== content_for :title do
+  = @order.number
+
+.row
+  .col-md-12
+    = link_to 'Nieuw abonnement', new_subscription_order_path(@order),
+      {class: 'btn btn-primary pull-right', data: {confirm: 'Nieuw abonnement aanmaken?' }}
+.row
+  .col-md-4
+    .panel.panel-default
+      .panel-heading = Order.model_name.human
+      .panel-body
+        h4 Bestelling
+        dl.dl-horizontal
+          dt= Order.human_attribute_name(:number)
+          dd= @order.number
+          dt= Order.human_attribute_name(:date)
+          dd= l(@order.date, format: :long)
+          dt= t('.end_date')
+          dd= l(@order.end_date, format: :long)
+          dt= Order.human_attribute_name(:lens_type)
+          dd= @order.lens_type
+          dt= Order.human_attribute_name(:replacement_type)
+          dd= @order.replacement_type
+        h4 Klant
+        dl.dl-horizontal
+          dt= Customer.human_attribute_name(:first_name)
+          dd= @order.customer.first_name
+          dt= Customer.human_attribute_name(:infix)
+          dd= @order.customer.infix
+          dt= Customer.human_attribute_name(:last_name)
+          dd= @order.customer.last_name
+          dt= Customer.human_attribute_name(:date_of_birth)
+          dd= l(@order.customer.date_of_birth, format: :long)
+          dt= Customer.human_attribute_name(:number)
+          dd= @order.customer.number
+  .col-md-8
+    .panel.panel-default
+      .panel-heading= Subscription.model_name.human.pluralize
+      table.table.table-striped.table-borderd
+        thead
+          th Einddatum
+        tbody
+          - @order.subscriptions.each do |subscription|
+            tr
+              td= l(subscription.end_date, format: :long)
+

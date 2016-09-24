@@ -1,26 +1,20 @@
 == content_for :title do
   | Klantenbeheer
 
-h2 Klantenbeheer
+.col-md-12
+  .panel.panel-default
+    .panel-heading= Customer.model_name.human.pluralize
+    .panel-body
+      = link_to 'Nieuwe klant', new_customer_path, {class: 'btn btn-primary pull-right'}
+    table.table.table-striped.table-bordered
+      thead
+        th Naam
+        th Geboortedatum
+        th Klantnummer
 
-= button_to 'Nieuwe klant', new_customer_path, {class: 'btn btn-primary pull-right'}
-
-table.table.table-striped.table-bordered
-  thead
-    th Naam
-    th Geboortedatum
-    th Klantnummer
-    th Ordernummer
-    th Vervangingssysteem
-    th Type lenzen
-    th Datum
-
-  tbody
-    - @orders.each do |order|
-      td = link_to order.customer.name, customer_path(order.customer)
-      td = l(order.customer.date_of_birth, format: :long)
-      td = order.customer.number
-      td = order.number
-      td = order.replacement_type
-      td = order.lens_type
-      td = l(order.date, format: :long)
+      tbody
+        - @customers.each do |customer|
+          tr
+            td = link_to customer.name, customer_path(customer)
+            td = l(customer.date_of_birth, format: :long)
+            td = customer.number

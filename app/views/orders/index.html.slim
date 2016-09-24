@@ -1,0 +1,28 @@
+== content_for :title do
+  | Bestellingen
+
+.col-md-12
+  .panel.panel-default
+    .panel-heading= Order.model_name.human.pluralize
+    .panel-body
+      = link_to 'Nieuwe Bestelling', new_order_path, {class: 'btn btn-primary pull-right'}
+    table.table.table-striped.table-bordered
+      thead
+        th Ordernummer
+        th Naam
+        th Geboortedatum
+        th Klantnummer
+        th Vervangingssysteem
+        th Type lenzen
+        th Datum
+
+      tbody
+        - @orders.each do |order|
+          tr
+            td = link_to order.number, order_path(order)
+            td = link_to order.customer.name, customer_path(order.customer)
+            td = l(order.customer.date_of_birth, format: :long)
+            td = order.customer.number
+            td = order.replacement_type
+            td = order.lens_type
+            td = l(order.date, format: :long)

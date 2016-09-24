@@ -1,36 +1,63 @@
 == content_for :title do
   = @customer.name
 
-.col-md-4
-  .panel.panel-default
-    .panel-heading = Customer.model_name.human
-    .panel-body
-      dl.dl-horizontal
-        dt= Customer.human_attribute_name(:first_name)
-        dd= @customer.first_name
-        dt= Customer.human_attribute_name(:infix)
-        dd= @customer.infix
-        dt= Customer.human_attribute_name(:last_name)
-        dd= @customer.last_name
-        dt= Customer.human_attribute_name(:date_of_birth)
-        dd= l(@customer.date_of_birth, format: :long)
-        dt= Customer.human_attribute_name(:number)
-        dd= @customer.number
+.row
+  .col-md-12
+    /= link_to 'Nieuw abonnement', new_customer_subscription_path(@customer),
+      {class: 'btn btn-success pull-right'}
+    = link_to 'Nieuwe order', new_customer_order_path(@customer),
+      {class: 'btn btn-primary pull-right'}
+.row
+  .col-md-4
+    .panel.panel-default
+      .panel-heading = Customer.model_name.human
+      .panel-body
+        dl.dl-horizontal
+          dt= Customer.human_attribute_name(:first_name)
+          dd= @customer.first_name
+          dt= Customer.human_attribute_name(:infix)
+          dd= @customer.infix
+          dt= Customer.human_attribute_name(:last_name)
+          dd= @customer.last_name
+          dt= Customer.human_attribute_name(:date_of_birth)
+          dd= l(@customer.date_of_birth, format: :long)
+          dt= Customer.human_attribute_name(:number)
+          dd= @customer.number
+          dt= Customer.human_attribute_name(:phone)
+          dd= @customer.phone
+          dt= Customer.human_attribute_name(:email)
+          dd= @customer.email
 
-.col-md-8
-  .panel.panel-default
-    .panel-heading = Order.model_name.human.pluralize
-    table.table.table-striped.table-bordered
-      thead
-        th Ordernummer
-        th Vervangingssysteem
-        th Type lenzen
-        th Datum
-        th Einddatum
-      tbody
-        - @customer.orders.each do |order|
-          td= link_to order.id, order_path(order)
-          td= order.replacement_type
-          td= order.lens_type
-          td= l(order.date, format: :long)
-          td= l(order.end_date, format: :long)
+  .col-md-8
+    .panel.panel-default
+      .panel-heading = Order.model_name.human.pluralize
+      table.table.table-striped.table-bordered
+        thead
+          th Ordernummer
+          th Vervangingssysteem
+          th Type lenzen
+          th Datum
+          th Einddatum
+        tbody
+          - @customer.orders.each do |order|
+            tr
+              td= link_to order.id, order_path(order)
+              td= order.replacement_type
+              td= order.lens_type
+              td= l(order.date, format: :long)
+              td= l(order.end_date, format: :long)
+    .panel.panel-default
+      .panel-heading = Subscription.model_name.human.pluralize
+      table.table.table-striped.table-bordered
+        thead
+          th Ordernummer
+          th SMS-frequentie
+          th Eind datum
+          th Type lenzen
+        tbody
+          - @customer.orders.flat_map(&:subscriptions).each do |subscription|
+            tr
+              td= subscription.order.number
+              td= subscription.order.replacement_type
+              td= l(subscription.end_date, format: :long)
+              td= subscription.order.lens_type
