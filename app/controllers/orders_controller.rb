@@ -26,7 +26,7 @@ class OrdersController < ApplicationController
     @order.subscriptions.new(end_date: @order.end_date).save!
 
     flash[:success] = 'Nieuw abonnement aangemaakt'
-    render :nothing => true
+    redirect_to @order
   end
 
   def create
