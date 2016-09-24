@@ -1,0 +1,29 @@
+== content_for :title do
+  | Abonnementen
+
+.col-md-12
+  .panel.panel-default
+    .panel-heading= Subscription.model_name.human.pluralize
+    table.table.table-striped.table-bordered
+      thead
+        th Klant naam
+        th Geboortedatum
+        th Klantnummer
+        th Telefoon nummer
+        th Email adres
+        th Ordernummer
+        th Lens type
+        th Vervangingssysteem
+        th Eind datum
+      tbody
+        - @subscriptions.each do |subscription|
+          tr
+            td = link_to subscription.order.customer.name, customer_path(subscription.order.customer)
+            td = l(subscription.order.customer.date_of_birth, format: :long)
+            td = subscription.order.customer.number
+            td = subscription.order.customer.phone
+            td = subscription.order.customer.email
+            td = subscription.order.number
+            td = subscription.order.lens_type
+            td = subscription.order.replacement_type
+            td = subscription.order.end_date
