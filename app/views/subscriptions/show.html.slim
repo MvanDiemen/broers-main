@@ -1,0 +1,43 @@
+== content_for :title do
+  = "Abonnement voor #{@subscription.order.customer.name}"
+
+.row
+  .col-md-4
+    .panel.panel-default
+      .panel-heading= Customer.model_name.human
+      table.table.table-striped.table-bordered
+        thead
+          th= Customer.human_attribute_name(:first_name)
+          th= Customer.human_attribute_name(:infix)
+          th= Customer.human_attribute_name(:last_name)
+          th= Customer.human_attribute_name(:date_of_birth)
+          th= Customer.human_attribute_name(:number)
+          th= Customer.human_attribute_name(:phone)
+          th= Customer.human_attribute_name(:email)
+        tbody
+          tr
+            td= @subscription.order.customer.first_name
+            td= @subscription.order.customer.infix
+            td= @subscription.order.customer.last_name
+            td= l(@subscription.order.customer.date_of_birth, format: :long)
+            td= @subscription.order.customer.number
+            td= @subscription.order.customer.phone
+            td= @subscription.order.customer.email
+
+  .col-md-4
+    .panel.panel-default
+      .panel-heading= Order.model_name.human
+      table.table.table-striped.table-borderd
+        thead
+          th= Order.human_attribute_name(:number)
+          th= Order.human_attribute_name(:date)
+          th= t('.end_date')
+          th= Order.human_attribute_name(:lens_type)
+          th= Order.human_attribute_name(:replacement_type)
+        tbody
+          tr
+            td= @subscription.order.number
+            td= l(@subscription.order.date, format: :long)
+            td= l(@subscription.order.end_date, format: :long)
+            td= @subscription.order.lens_type
+            td= @subscription.order.replacement_type
